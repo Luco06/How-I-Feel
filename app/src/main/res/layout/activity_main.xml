@@ -20,7 +20,7 @@
         android:layout_marginTop="46dp"
         android:src="@drawable/smiley_happy" />
     <ImageButton
-        android:id="@+id/com_main"
+        android:id="@+id/comment_main"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
