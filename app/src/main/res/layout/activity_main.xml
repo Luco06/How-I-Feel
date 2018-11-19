@@ -19,19 +19,22 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="46dp"
         android:src="@drawable/smiley_happy" />
-    <ImageView
+    <ImageButton
         android:id="@+id/com_main"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
+        android:background="null"
         android:src="@drawable/ic_note_add_black"/>
-    <ImageView
+    <ImageButton
         android:id="@+id/history_main"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
+        android:background="@null"
         android:src="@drawable/ic_history_black"/>
+
 
 </RelativeLayout>
