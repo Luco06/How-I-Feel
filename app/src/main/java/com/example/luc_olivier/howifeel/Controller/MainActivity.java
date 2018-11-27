@@ -2,12 +2,16 @@ package com.example.luc_olivier.howifeel.Controller;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 
 import com.example.luc_olivier.howifeel.R;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "MainActivity";
+    private float rawY = 0.0f;
     public static final int [][] LIST_COLOR_IMG = {
             {R.color.faded_red,
                     R.color.warm_grey,
@@ -20,7 +24,6 @@ public class MainActivity extends AppCompatActivity {
                     R.drawable.smiley_normal,
                     R.drawable.smiley_happy,
                     R.drawable.smiley_super_happy}};
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,5 +45,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addComment() {
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        float dist = 0;
+        switch (event.getAction())
+        {
+            case MotionEvent.ACTION_DOWN:
+                rawY = event.getY();
+                break;
+            case MotionEvent.ACTION_UP:
+                dist = event.getY() - rawY;
+                Log.d(TAG, String.valueOf(dist));
+                break;
+                default:
+                    break;
+        }
+        return super.onTouchEvent(event);
     }
 }
