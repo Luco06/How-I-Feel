@@ -9,10 +9,11 @@
     android:paddingRight="16dp"
     android:orientation="vertical"
     android:background="@color/light_sage"
-    tools:context=".Controller.MainActivity">
+    tools:context=".Controller.MainActivity"
+    android:id="@+id/main_activity_background">
 
     <ImageView
-        android:id="@+id/smiley1"
+        android:id="@+id/smiley"
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:layout_alignParentTop="true"

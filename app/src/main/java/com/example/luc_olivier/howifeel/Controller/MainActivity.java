@@ -1,18 +1,29 @@
 package com.example.luc_olivier.howifeel.Controller;
 
+import android.app.Activity;
+import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.PagerAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.example.luc_olivier.howifeel.R;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
+
+    ImageView imageView;
     private float rawY = 0.0f;
-    public static final int [][] LIST_COLOR_IMG = {
+    public static final int[][] LIST_COLOR_IMG = {
             {R.color.faded_red,
                     R.color.warm_grey,
                     R.color.cornflower_blue_65,
@@ -24,19 +35,27 @@ public class MainActivity extends AppCompatActivity {
                     R.drawable.smiley_normal,
                     R.drawable.smiley_happy,
                     R.drawable.smiley_super_happy}};
+    private ImageButton mBtnComment;
+    private ImageButton mBtnHistory;
+    private ImageView mSmiley;
+    private RelativeLayout mRelativeLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
 
-        ImageButton btnComment = (ImageButton) findViewById(R.id.comment_main);
-        ImageButton btnHistory = (ImageButton) findViewById(R.id.history_main);
+        mBtnComment = (ImageButton) findViewById(R.id.comment_main);
+        mBtnHistory = (ImageButton) findViewById(R.id.history_main);
+        mSmiley = (ImageView) findViewById(R.id.smiley);
+        mRelativeLayout = (RelativeLayout) findViewById(R.id.main_activity_background);
 
         /*
          *@mBtnComment
          * Button to the left side, which open an Alert dialog on click
          */
-        btnComment.setOnClickListener(new View.OnClickListener() {
+        mBtnComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 addComment();
@@ -50,17 +69,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         float dist = 0;
-        switch (event.getAction())
-        {
+        int height;
+        switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 rawY = event.getY();
                 break;
             case MotionEvent.ACTION_UP:
                 dist = event.getY() - rawY;
-                Log.d(TAG, String.valueOf(dist));
+                mSmiley.setImageResource(R.drawable.smiley_disappointed);
                 break;
-                default:
-                    break;
         }
         return super.onTouchEvent(event);
     }
