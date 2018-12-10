@@ -74,14 +74,13 @@ public class MainActivity extends AppCompatActivity {
         int height;
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                rawY = event.getY() ;
                 break;
 
             case MotionEvent.ACTION_UP:
                 dist = event.getY() - rawY;
 
-                if (indexMood <LIST_COLOR_IMG[0].length - 1 && event.getY()- rawY > SWIPE_MIN_DISTANCE
-                        && event.getY() - rawY > SWIPE_THRESHOLD_VELOCITY) {
+                if (indexMood <LIST_COLOR_IMG[0].length - 1 && rawY - event.getY() > SWIPE_MIN_DISTANCE
+                        &&rawY - event.getY() > SWIPE_THRESHOLD_VELOCITY) {
                     indexMood--;
                     mSmiley.setImageResource(LIST_COLOR_IMG[1][indexMood]);
                     mRelativeLayout.setBackgroundColor(getResources().getColor(LIST_COLOR_IMG[0][indexMood]));
