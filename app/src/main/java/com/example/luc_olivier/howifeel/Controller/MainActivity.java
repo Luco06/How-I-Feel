@@ -21,7 +21,6 @@ import com.example.luc_olivier.howifeel.R;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
-    ImageView imageView;
     private float rawY = 0.0f;
     public static final int[][] LIST_COLOR_IMG = {
             {R.color.faded_red,
@@ -35,6 +34,9 @@ public class MainActivity extends AppCompatActivity {
                     R.drawable.smiley_normal,
                     R.drawable.smiley_happy,
                     R.drawable.smiley_super_happy}};
+    public static int indexMood = 3;
+    private static final int SWIPE_MIN_DISTANCE = 130;
+    private static final int SWIPE_THRESHOLD_VELOCITY = 200;
     private ImageButton mBtnComment;
     private ImageButton mBtnHistory;
     private ImageView mSmiley;
@@ -72,11 +74,20 @@ public class MainActivity extends AppCompatActivity {
         int height;
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                rawY = event.getY();
+                rawY = event.getY() ;
                 break;
+
             case MotionEvent.ACTION_UP:
                 dist = event.getY() - rawY;
-                mSmiley.setImageResource(R.drawable.smiley_disappointed);
+
+                if (indexMood <LIST_COLOR_IMG[0].length - 1 && event.getY()- rawY > SWIPE_MIN_DISTANCE
+                        && event.getY() - rawY > SWIPE_THRESHOLD_VELOCITY) {
+                    indexMood--;
+                    mSmiley.setImageResource(LIST_COLOR_IMG[1][indexMood]);
+                    mRelativeLayout.setBackgroundColor(getResources().getColor(LIST_COLOR_IMG[0][indexMood]));
+                } else
+
+                    return true;
                 break;
         }
         return super.onTouchEvent(event);
