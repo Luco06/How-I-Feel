@@ -35,8 +35,6 @@ public class MainActivity extends AppCompatActivity {
                     R.drawable.smiley_happy,
                     R.drawable.smiley_super_happy}};
     public static int indexMood = 3;
-    private static final int SWIPE_MIN_DISTANCE = 130;
-    private static final int SWIPE_THRESHOLD_VELOCITY = 200;
     private ImageButton mBtnComment;
     private ImageButton mBtnHistory;
     private ImageView mSmiley;
@@ -74,21 +72,25 @@ public class MainActivity extends AppCompatActivity {
         int height;
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
+                rawY = event.getY();
                 break;
 
             case MotionEvent.ACTION_UP:
                 dist = event.getY() - rawY;
 
-                if (indexMood <LIST_COLOR_IMG[0].length - 1 && rawY - event.getY() > SWIPE_MIN_DISTANCE
-                        &&rawY - event.getY() > SWIPE_THRESHOLD_VELOCITY) {
-                    indexMood--;
-                    mSmiley.setImageResource(LIST_COLOR_IMG[1][indexMood]);
-                    mRelativeLayout.setBackgroundColor(getResources().getColor(LIST_COLOR_IMG[0][indexMood]));
-                } else
-
-                    return true;
+                if (indexMood <LIST_COLOR_IMG[0].length - 1 && dist < 0) {
+                    indexMood --;
+                    moodChange();
+                } else if (indexMood <LIST_COLOR_IMG[0].length - 1 && dist > 0) {
+                    indexMood ++;
+                    moodChange();
+                }
                 break;
         }
         return super.onTouchEvent(event);
+    }
+    private void moodChange() {
+        mSmiley.setImageResource(LIST_COLOR_IMG[1][indexMood]);
+        mRelativeLayout.setBackgroundColor(getResources().getColor(LIST_COLOR_IMG[0][indexMood]));
     }
 }
