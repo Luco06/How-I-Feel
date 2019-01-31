@@ -1,17 +1,13 @@
 package com.example.luc_olivier.howifeel.Controller;
 
-import android.app.Activity;
-import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.PagerAdapter;
-import android.support.v7.app.AppCompatActivity;
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -64,6 +60,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addComment() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        EditText editText = new EditText(this);
+        builder.setMessage("Ajoutez un commentaire");
+        builder.setView(editText);
+        builder.setPositiveButton("Confirmer", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+
+            }
+        });
+        builder.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     @Override
@@ -78,17 +93,18 @@ public class MainActivity extends AppCompatActivity {
             case MotionEvent.ACTION_UP:
                 dist = event.getY() - rawY;
 
-                if (indexMood <LIST_COLOR_IMG[0].length - 1 && dist < 0) {
-                    indexMood --;
+                if (indexMood < LIST_COLOR_IMG[0].length + 1  && dist < 0) {
+                    indexMood--;
                     moodChange();
-                } else if (indexMood <LIST_COLOR_IMG[0].length - 1 && dist > 0) {
-                    indexMood ++;
+                } else if (indexMood < LIST_COLOR_IMG[0].length - 1 && dist > 0) {
+                    indexMood++;
                     moodChange();
                 }
                 break;
         }
         return super.onTouchEvent(event);
     }
+
     private void moodChange() {
         mSmiley.setImageResource(LIST_COLOR_IMG[1][indexMood]);
         mRelativeLayout.setBackgroundColor(getResources().getColor(LIST_COLOR_IMG[0][indexMood]));
