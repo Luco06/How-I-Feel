@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -42,10 +43,10 @@ public class MainActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
 
-        mBtnComment = (ImageButton) findViewById(R.id.comment_main);
-        mBtnHistory = (ImageButton) findViewById(R.id.history_main);
-        mSmiley = (ImageView) findViewById(R.id.smiley);
-        mRelativeLayout = (RelativeLayout) findViewById(R.id.main_activity_background);
+        mBtnComment = findViewById(R.id.comment_main);
+        mBtnHistory = findViewById(R.id.history_main);
+        mSmiley = findViewById(R.id.smiley);
+        mRelativeLayout = findViewById(R.id.main_activity_background);
 
         /*
          *@mBtnComment
@@ -83,8 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        float dist = 0;
-        int height;
+        float dist;
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 rawY = event.getY();
@@ -93,12 +93,14 @@ public class MainActivity extends AppCompatActivity {
             case MotionEvent.ACTION_UP:
                 dist = event.getY() - rawY;
 
-                if (indexMood < LIST_COLOR_IMG[0].length + 1  && dist < 0) {
+                if (indexMood > 0 && dist < 0) {
                     indexMood--;
                     moodChange();
                 } else if (indexMood < LIST_COLOR_IMG[0].length - 1 && dist > 0) {
                     indexMood++;
                     moodChange();
+                }else {
+                    Log.i(TAG,"ça ne marche pas");
                 }
                 break;
         }
